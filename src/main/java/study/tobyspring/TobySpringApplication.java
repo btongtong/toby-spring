@@ -20,15 +20,19 @@ public class TobySpringApplication {
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
         WebServer webServer = serverFactory.getWebServer(servletContext -> {    // 서블릿 등록
             servletContext.addServlet("frontcontroller", new HttpServlet() {
+                HelloController helloController = new HelloController();
+
                 @Override
                 protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                     // 인증, 보안, 다국어, 공통 기능
-                    if(req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())) {
-                        String name = req.getParameter("name");
+                    if(req.getRequestURI().equals("/hello") && req.getMethod().equals(HttpMethod.GET.name())) { // 매핑
+                        String name = req.getParameter("name"); // 웹 요청 로직을 처리할 때 쓰일 평범한 자바 데이터 타입으로 바인딩
+
+                        String ret = helloController.hello(name);
 
                         resp.setStatus(HttpStatus.OK.value());
                         resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
-                        resp.getWriter().println("Hello " + name);
+                        resp.getWriter().println(ret);
                     }
                     else if(req.getRequestURI().equals("/user")) {
                         //
