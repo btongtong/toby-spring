@@ -3,22 +3,14 @@ package study.tobyspring;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @Configuration
+@ComponentScan
 public class TobySpringApplication {
-    @Bean
-    public HelloController helloController(HelloService helloService) {
-        return new HelloController(helloService);
-    }
-
-    @Bean
-    public HelloService helloService() {
-        return new SimpleHelloService();
-    }
 
     public static void main(String[] args) {
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext() {
@@ -35,7 +27,7 @@ public class TobySpringApplication {
                 webServer.start();
             }
         };
-        applicationContext.register(TobySpringApplication.class);
+        applicationContext.register(TobySpringApplication.class);   // 컨테이너를 구성하는데 필요한 설정이 들은 자바 클래스 정보를 등록
         applicationContext.refresh();
     }
 
