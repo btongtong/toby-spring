@@ -22,7 +22,7 @@ public class HelloApiTest {
         // header(content-type) text/plain
         assertThat(res.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).startsWith(MediaType.TEXT_PLAIN_VALUE);
         // body Hello Yumi
-        assertThat(res.getBody()).isEqualTo("Hello Yumi");
+        assertThat(res.getBody()).isEqualTo("*Hello Yumi*");
     }
 
     @Test
