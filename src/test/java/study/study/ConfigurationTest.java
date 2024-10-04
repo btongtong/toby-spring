@@ -4,16 +4,18 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 public class ConfigurationTest {
     @Test
     void configuration() {
-        // 스프링 컨테이너의 구성정보로 사용되기 전은 bean1.common과 bean2.common이 같지 않다: Common을 매번 생성한다
-        MyConfig myConfig = new MyConfig();
-        Bean1 bean1 = myConfig.bean1();
-        Bean2 bean2 = myConfig.bean2();
+        // 스프링 컨테이너의 구성정보로 등록되면 bean1.common과 bean2.common이 같다: 하나의 Common으로 bean1, bean2를 생성한다.
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext();
+        ac.register(MyConfig.class);
+        ac.refresh();
+
+        Bean1 bean1 = ac.getBean(Bean1.class);
+        Bean2 bean2 = ac.getBean(Bean2.class);
 
         Assertions.assertThat(bean1.common).isSameAs(bean2.common);
     }
