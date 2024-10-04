@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 public class ConfigurationTest {
     @Test
     void configuration() {
-        // 스프링 컨테이너의 구성정보로 등록되면 bean1.common과 bean2.common이 같다: 하나의 Common으로 bean1, bean2를 생성한다.
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext();
         ac.register(MyConfig.class);
         ac.refresh();
@@ -20,7 +19,27 @@ public class ConfigurationTest {
         Assertions.assertThat(bean1.common).isSameAs(bean2.common);
     }
 
-    @Configuration
+    @Test
+    void proxyCommonMethod() {
+        MyConfigProxy myConfigProxy = new MyConfigProxy();
+
+        Bean1 bean1 = myConfigProxy.bean1();
+        Bean2 bean2 = myConfigProxy.bean2();
+
+        Assertions.assertThat(bean1.common).isSameAs(bean2.common);
+    }
+
+    static class MyConfigProxy extends MyConfig {
+        private Common common;
+        @Override
+        Common common() {
+            if(this.common == null) this.common = super.common();
+
+            return common;
+        }
+    }
+
+    @Configuration(proxyBeanMethods = true)
     static class MyConfig {
         @Bean
         Common common() {
