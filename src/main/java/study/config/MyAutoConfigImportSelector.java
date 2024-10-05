@@ -7,7 +7,7 @@ import org.springframework.core.type.AnnotationMetadata;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAutoConfigImportSelector implements DeferredImportSelector {
+public class MyAutoConfigImportSelector implements DeferredImportSelector { // 유저구성정보 로딩(@Configuration 빈 처리) 후에 자동구성정보 적용하기 위해 Deffered~ 구현
     private final ClassLoader classLoader;
 
     public MyAutoConfigImportSelector(ClassLoader classLoader) {
