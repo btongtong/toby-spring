@@ -1,4 +1,4 @@
-study.config.autoconfig.ServerPropertiesConfig
+study.config.autoconfig.PropertyPostProcessorConfig
 study.config.autoconfig.PropertyPlaceholderConfig
 study.config.autoconfig.TomcatWebServerConfig
 study.config.autoconfig.JettyWebServerConfig
