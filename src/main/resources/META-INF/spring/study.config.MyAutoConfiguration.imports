@@ -1,6 +1,0 @@
-study.config.autoconfig.DataSourceConfig
-study.config.autoconfig.PropertyPostProcessorConfig
-study.config.autoconfig.PropertyPlaceholderConfig
-study.config.autoconfig.TomcatWebServerConfig
-study.config.autoconfig.JettyWebServerConfig
-study.config.autoconfig.DispatcherServletConfig
